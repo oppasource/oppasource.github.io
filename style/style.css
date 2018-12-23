@@ -19,13 +19,13 @@ img
 
 h1, h2, h3, h4, h5, h6 
 { font: normal 175% 'century gothic', arial, sans-serif;
-  color: #43423F;
+  color: #050504;
   margin: 0 0 15px 0;
   padding: 15px 0 5px 0;}
 
 h2
 { font: normal 175% 'century gothic', arial, sans-serif;
-  color: #A4AA04;}
+  color: #050504;}
 
 h4, h5, h6
 { margin: 0;
@@ -187,7 +187,8 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 #content
 { text-align: left;
   width: 595px;
-  padding: 0;}
+  padding: 0;
+  color: #444439}
 
 #content ul
 { margin: 2px 0 22px 0px;}
