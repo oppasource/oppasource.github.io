@@ -11,12 +11,12 @@
 </script>
 <script> 
 $(function(){
-  $("#header1").load("../header1.html"); 
-  $("#footer1").load("../footer1.html"); 
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
 });
 </script> 
 
-  <meta name="description" content="research papers to read" />
+  <meta name="description" content="research papers read" />
   <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
@@ -56,6 +56,8 @@ $(function(){
 
         <span class="center"><img src="3.png" alt="something wrong" /></span>
 
+        <hr><br/>
+
         <p>There is also another <i><strong>Unfolding Recursive Autoencoder</strong></i> where the encoding scheme is the same but for decoding step it tries to reconstruct the entire spanned subtree underneath each node. Changes with respect to above equations is as shown:</p>
 
         <span class="center"><img src="5.png" alt="something wrong" /></span>
@@ -66,9 +68,14 @@ $(function(){
 
         <span class="right"><img src="9.png" alt="something wrong" width="60%" height="60%"/></span>
 
+        <hr><br/>
+
         <p><i><strong>Dynamic Pooling</strong></i> is used to transform variable length similarity matrix to fixed length. Lets say we have similarity matrix of size <i>m x n</i> and we want to convert it to <i>A x A</i>. Then we first partition similarity matrix into <i>A</i> roughly equal parts and we take minimum value from each of the rectangular region of this grid. We will then have a fixed size matrix to train any classifier.</p> 
 
+
+
         <br/><br/><br/>
+        <hr><br/>
 
         <h2>Reference</h2>
         <a href="https://papers.nips.cc/paper/4204-dynamic-pooling-and-unfolding-recursive-autoencoders-for-paraphrase-detection.pdf">Dynamic Pooling and Unfolding Recursive Autoencoders for Paraphrase Detection</a>
