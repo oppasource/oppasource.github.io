@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>A Hierarchical Structured Self-Attentive Model for Extractive Document Summarization (HSSAS)</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>A Hierarchical Structured Self-Attentive Model for Extractive Document Summarization (HSSAS)</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>The paper describes how we can use sentence and document representation for generating <strong>extractive summary.</strong> They treat summary generation task as a classification task to determine if each sentence should be present in the summary or not.</p>
+
+        <h2>"How" part of the paper</h2>
+        <p>First they computed sentence and document representation using hierarchical attention mechanism. The model is shown below:</p>
+
+        <span class="center"><img src="1.png" alt="something wrong" /></span>
+
+        <p>For words in a sentence, they took the embeddings and feed it to a Bi-directional LSTM network. Attention is taken accross hidden states given out by the Bi-LSTM network to get the sentence representation. This is done for every sentence and we get representations for all the sentences in a document. H<sub>s</sub> is concatenated hidden states of Bi-LSTM network and w<sub>s</sub> are the attention weights. s<sub>i</sub> is the sentence representation of i<sup>th</sup> sentence.</p>
+
+        <span class="center"><img src="2.png" alt="something wrong" /></span>
+        <span class="center"><img src="3.png" alt="something wrong" /></span>
+
+        <p>Similarly, the sentence representation is passed through another Bi-LSTM network and again a similar attention method is applied to get document representation.</p>
+
+        <span class="center"><img src="4.png" alt="something wrong" /></span>
+        <span class="center"><img src="5.png" alt="something wrong" /></span>
+
+        <hr><br/>
+
+        <p><strong><i>CLassification Layer</i></strong> is present at the end, it is a logistic layer which takes a binary decision if sentence is present in the summary or not. For this classification, they comepute abstract features. For j<sup>th</sup> sentence, features are computed as follows:</p>
+
+        <p>The information content of the j<sup>th</sup> sentence in the document is represented by:</p>
+
+        <span class="center"><img src="6.png" alt="something wrong"/></span>
+
+        <p>The salience of the sentence with respect to the document is given by:</p>
+
+        <span class="center"><img src="7.png" alt="something wrong"/></span>
+
+        <p>The position of the sentence with respect to the document is modeled by:</p>
+
+        <span class="center"><img src="9.png" alt="something wrong"/></span>
+
+        <p>Where p<sub>j</sub> is the positional embedding of the sentence calculated by concatenating the embeddings corresponding to the forward and backward position indices of the sentence in the document.</p>
+
+        <p>The novelty of the sentence with respect to the current state of the summary is given by:</p>
+
+        <span class="center"><img src="8.png" alt="something wrong"/></span>
+
+        <p>o<sub>j</sub> is the representation of summary generated after seeing (j-1) sentences of document. It is given as:</p>
+
+        <p>All the W's in above equation are weights which will get trained.</p>
+
+        <span class="center"><img src="10.png" alt="something wrong"/></span>
+
+        <p>y<sub>i</sub> is a binary number which tells if i<sup>th</sup> sentence should be present in the summary or not.</p>
+
+        <p>Including summary representation in scoring function allows the model to take into account previously generated summary and take decisions accoriding to it.</p>
+
+        <p>Putting together all the above equations, we get the final probability distribution as follows:</p>
+
+        <span class="center"><img src="11.png" alt="something wrong"/></span>
+
+        <p>The negative log likelihood which is minimized is given as:</p>
+
+        <span class="center"><img src="12.png" alt="something wrong"/></span>
+
+        <p>where y<sub>j</sub><sup>d</sup> is the binary summary label j<sup>th</sup> sentence in d<sup>th</sup> document. n<sub>d</sub> is number of sentences in document d and N is number of documents.</p>
+
+        <hr><br/>
+        
+
+        <h2>Reference</h2>
+        <a href="https://arxiv.org/pdf/1805.07799.pdf">A Hierarchical Structured Self-Attentive Model for Extractive Document Summarization (HSSAS)</a>
+
+        <br/><br/>
+
+
+
+
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
