@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Get To The Point: Summarization with Pointer-Generator Networks</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Get To The Point: Summarization with Pointer-Generator Networks</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>Paper tries to solve two problems. First is pointer generator network for solving the problem of unknown out of vocabulary words. Second is coverage for solving the problem of repetition produced by the network while generating abstract summary.</p>
+
+        <h2>"How" part of the paper</h2>
+        <p>The baseline encoder-decoder model with attention above which pointer and coverage will be added is shown:</p>
+
+        <span class="center"><img src="1.png" alt="something wrong" width="100%" height="100%"/></span>
+
+        <p>Attention score is calculated by taking the encoder hidden states and decoder hidden state at t. Usind the attention scores we get a context vector h<sup>*</sup>, for decoder step t. Concatenation of context vector and decoder hidden state at t is used to predict the output at t. The attention equations for above baseline model is given below.</p>
+
+        <span class="center"><img src="2.png" alt="something wrong" /></span>
+        <span class="center"><img src="3.png" alt="something wrong" /></span>
+        <span class="center"><img src="4.png" alt="something wrong" /></span>
+        <span class="center"><img src="5.png" alt="something wrong" /></span>
+
+        <p>The output token probability is equal to the above probability.</p>
+
+        <span class="center"><img src="6.png" alt="something wrong" /></span>
+
+        <hr><br/>
+
+        <p><strong><i>Pointer-Generator Network</i></strong> is added so as to increase the output vocabulary. In addition to the  output vocabulary in baseline model, it will also have the ability to predict words from the source text itself even if the words are not present in ouput vocab(example names, dates, numbers, etc). This is kind of like copying words directly from the source text to the output while generating summary. Note that the attention  The model is shown below.</p>
+
+        <span class="center"><img src="7.png" alt="something wrong" width="100%" height="100%"/></span>
+
+        <p>A generation probability is introduced in order to give the probability whether the output token should be a token from output vocab or it should be a word copied from source text. This probability is computed which is based on decoder hidden state at t, context vector at t, and decoder input. </p>
+
+        <span class="center"><img src="8.png" alt="something wrong"/></span>
+
+        <p>Attention scores are used as the weightage given to the words in source text as to which word should be copied from source text. The final probability distribution for the <i><strong>extended vocabulary</strong></i> is given by:</p>
+
+        <span class="center"><img src="9.png" alt="something wrong"/></span>
+
+        <p>For OOV word, <i>P<sub>vocab</sub>(w)</i> will be zero, similarly if a word does not appear in source text then  &Sigma; <i>a<sup>t</sup><sub>i</sub></i> is zero.</p>
+
+        <p>Note that this is different from the probability distribution compared to above baseline model. This kind of distribution allows us to give probabilities to the word in source text as well.</p>
+
+        <p>The negative-log likelihood loss that we try to minimize is same in both the above model:</p>
+
+        <span class="center"><img src="10.png" alt="something wrong" /></span>
+        <span class="center"><img src="11.png" alt="something wrong" /></span>
+
+        <p><i>w<sup>*</sup><sub>t</sub></i> is the target word at t<sup>th</sup> decoding step.</p>
+
+        <hr><br/>
+
+        
+
+        <p>To solve the problem of repetition in summary generation <i><strong>Coverage Mechanism</strong></i> is used. In coverage mechanism, a coverage vector <i>c<sup>t</sup></i> is maintained which is the sum attention distributions of all the previous decoder steps.</p>
+
+        <span class="center"><img src="12.png" alt="something wrong"/></span>
+
+        <p>Intuitively, coverage vector give an idea as to what all words have been given attention. <i>c<sup>0</sup></i> is a zero vector as no word has been given attention.</p>
+
+        <p>Coverage vector is also introduced in the equation for calculating attention as follows:</p>
+
+        <span class="center"><img src="13.png" alt="something wrong"/></span>
+
+        <p>This should avoid for attention mechanism to avoid repeatedly giving attention to one location.</p>
+
+        <p>A new <i><strong>coverage loss</strong></i> is also defined to penalize repeatedly attending to the same locations:</p>
+
+        <span class="center"><img src="14.png" alt="something wrong"/></span>
+
+        <p>Finally, the new loss function now becomes:</p>
+
+        <span class="center"><img src="15.png" alt="something wrong"/></span>
+
+
+
+        <hr><br/>
+        
+
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="https://arxiv.org/pdf/1704.04368.pdf">Get To The Point: Summarization with Pointer-Generator Networks</a></li>
+          <li><a href="http://www.abigailsee.com/2017/04/16/taming-rnns-for-better-summarization.html">Blog for the paper.</a></li>    
+        </ul>
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
