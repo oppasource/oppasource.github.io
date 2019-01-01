@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Improving Hypernymy Detection with an Integrated Path-based and Distributional Method</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Improving Hypernymy Detection with an Integrated Path-based and Distributional Method</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>There are two words and problem is to determine if one word is hypernymy of other. That is for <i>(x, y)</i> pair, <i>y</i> is hypernymy of <i>x</i> or not. </p>
+
+        <p>There are two methods for hypernymy detection explored, they are, distributional methods(based on distributional representation or embeddings) and path-based methods(based on lexico-syntactic path connecting hypernymy and hyponymy in corpus). Paper tries to kind of integrate both these methods together which actually gives a better performance compared to both individually. </p>
+
+        <h2>"How" part of the paper</h2>
+        <p><strong><i>Distributional methods</i></strong> deals with concatenation, subtraction, dot product or such operations on embeddings of these pairs of words and giving binary label ouput. This performs quite well.</p>
+
+        <p><strong><i>Path-based method</i></strong> deals with how the two words appear in the corpus. Example <i>"Y such as X"</i>. That is looking at that path through which the two words are connected it tries to figure out if it is hypernymy or not.</p>
+
+        <p>The intuition behind integrating these two methods is that both the menthods are complementary and both gives some extra knowledge which other method dosent provide. It is also seen that integrating above two methods out performs both the methods.</p>
+
+        <hr><br/>
+
+        <p>First we will see how the paper encodes path-based features.</p>
+
+        <span class="center">
+        <figure>
+            <img src="1.png" alt="something wrong"/>
+            <figcaption>An example dependency tree of the sentence "parrot is a bird", with x=parrot and y=bird, is represented in the paper as <i>X/NOUN/nsubj/<, be/VERB/ROOT/-, Y/NOUN/attr/> </i></figcaption>
+        </figure>
+        </span>
+
+        <p>Consider the sentence in corpus containing both words of the pair. Depedency tree is formed first. In the above figure. notice that there is different representation for each edge of dependency tree. Each edge is denoted as <i>lemma/POS/dep/dir</i>. That is lemma, POS tag, the dependency label, and the direction of the edge.</p>
+
+        <p>To get the representation of the entire dependency tree, The edge representation shown above for a tree is passed through an LSTM and the last cell output is considered to be the dependency tree representation. To give input to LSTM network, an edge representation is needed, which is given by:</p>
+
+        <span class="center"><img src="2.png" alt="something wrong" /></span>
+
+        <p>All the v's in RHS of the equation represent the embedding vector of lemma, part-of-speech, dependency label and dependency direction (along the path from x to y).</p>
+
+        <span class="center"><img src="3.png" alt="something wrong"  width="100%" height="100%"/></span>
+
+        <p>For a term-pair, first all the occurances are found in the corpus and paths are extracted. Then dependency tree is generated for all these paths. Then for a path, edge representation is formed for each edge in its dependency tree and is fed to LSTM network shown above. Final Hidden state of LSTM gives path representation. Such path representation is formed for every path. All these path representation are passed through average-pooling layer as follows:</p>
+
+
+        <span class="center"><img src="4.png" alt="something wrong" /></span>
+
+        <p>Where <i>f<sub>p,(x,y)</sub></i> is the frequency of <i>p</i> in <i>paths(x,y)</i>.</p>
+
+        <p>Then the path vector is fed to a single-layer network that performs binary classification to decide whether y is a hypernym of x.</p>
+
+        <span class="center"><img src="5.png" alt="something wrong" /></span>
+
+        <hr><br/>
+
+        <p>For the <strong><i>Intergrated Network</i></strong> which also integrates distributional representations, simple the word embedding of x and y is concatenated with path vector. This gives features path-based knowledge as well as distributional knowledge. This is shown in the dashed boxes in the model diagram.</p>
+
+        <span class="center"><img src="6.png" alt="something wrong" /></span>
+
+        <p>Similarly, after including distributional features, updated path vector is formed which is passed throught single-layer network to perform binary classification.</p>
+
+        <hr><br/>
+
+
+        <h2>Reference</h2>
+        <a href="http://www.aclweb.org/anthology/P16-1226">Improving Hypernymy Detection with an Integrated Path-based and Distributional Method</a>
+             
+      
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
