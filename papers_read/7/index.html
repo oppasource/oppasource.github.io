@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Predicting Distresses using Deep Learning of Text Segments in Annual Reports</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Predicting Distresses using Deep Learning of Text Segments in Annual Reports</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>It is a classification problem, give the auditor's report and management's statement from the annual report of a company, including some of the financial features of the company, prediction is made whether the company will go in distress. Here distress implies bankruptcy.</p>
+
+
+        <h2>"How" part of the paper</h2>
+        <p>Previous work has been done considering only financial variables about a company. In this work, the financial variables are concatenanted with information from auditor's report and management's statement from annual report of the company. Results had improvements which indicated that information from annual report also plays import role in giving out information about distresses within a company.</p>
+
+        <p>The financial variables include 50 featues out of which 44 were continuous and 6 were categorical. Continuous features include Net profit, Return on equity, Liquid assets, etc and categorical features include Sector, Region, etc.</p>
+
+        <p>The <strong><i>Text Processing</i></strong> steps for auditor's report and management's statement is as follows:</p>
+
+        <ol>
+          <li>Punctuations, new lines and tabs were removed and case was made to lower case.</li>
+          <li>Porter Stemming.</li>
+          <li>Removal of stop words. Numbers replaced by generic number token.</li>
+          <li>Named entities were removed(using spacy)</li>
+          <li>Words with frequency less than 25 was ignored with respect to entire dataset.</li>
+        </ol>
+
+        <hr><br/>
+
+        <p>The details about the <strong><i>Main Model</i></strong> is given in this section. Textual data from Auditor's report and Management's statement is converted to half overlapping blocks of words. First block contains 1 to k words then second block contains k/2 to (k/2 + k) words and so on. Pretrained word2vec is used to get a matrix representation for each block.</p>
+
+        <span class="center"><img src="1.png" alt="something wrong" width="100%" height = "100%"/></span>
+
+        <p>For each matrix representation of block, it is passed through a convolutional layer having different filters followed by max pooling layer. It was flattened at the end after max pooling to get a fixed size vector representation of the block(remember the block size is fixed with k words).</p>
+
+        <p>These vector representation is passed through LSTM layer one after another to incorporate the sequence information. Attention is used as a scaled addition of all hidden states of LSTM layer which gives a representation of all the textual blocks of annual report.</p>
+
+        <p>This representation is concatenated with the finanacial variables discussed before and a feed forward neural network(2 hidden layers deep) is used to classify distress.</p>
+
+        <hr><br/>
+
+        <h2>Reference</h2>
+        <a href="https://arxiv.org/pdf/1811.05270.pdf">Predicting Distresses using Deep Learning of Text Segments in Annual Reports</a>
+             
+      
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
