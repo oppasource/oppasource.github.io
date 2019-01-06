@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Volatility Prediction using Financial Disclosures Sentiments with Word Embedding-based IR Models</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Volatility Prediction using Financial Disclosures Sentiments with Word Embedding-based IR Models</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>The paper tries to build a model to predict volatility in stock marker using some financial data along with the sentiments in the annual report.</p>
+
+
+        <h2>"How" part of the paper</h2>
+        <p>Volatility is defined as the natural log of the standard deviation of (adjusted) return prices in a window of &tau; days.</p>
+
+        <span class="center"><img src="1.png" alt="something wrong"/></span>
+
+        <p><i>r<sub>t</sub></i> is the return price and <i>r&#x304;</i> is the mean of return price.</p>
+
+        <span class="center"><img src="2.png" alt="something wrong"/></span>
+
+        <p><i>P<sub>t</sub></i> is the (adjusted) closing price on trading date <i>t</i>.</p>
+
+        <p>Prediction label, volatility of the stock is calculated as the mean of volatility of first four quartiles after the publication of report.</p>
+
+        <hr><br/>
+
+        <p>For <strong><i>Sentiment Analysis</i></strong> of the annual reports, keywords based method is used. Set of keywords is extracted from finance-specific lexicon using the positive, negative, and uncertain groups, which are stemmed using Porter Stemmer.</p>
+
+        <p>Word2vec vectors are trained considering the annual reports, and for each keyword in the set, 20 most similar words are added to the keyword set. Cosine similarity is used between word vectors for getting most similar words.</p>
+
+        <p>The word weighting schemes commonly used in IR considered is as follows:</p>
+
+        <span class="center"><img src="3.png" alt="something wrong"/></span>
+
+        <p>Where <i>tc<sub>d<sub>i</sub></sub>(t)</i> is the number of occurances of keyword <i>t</i> in report <i>i, ||d<sub>i</sub>||</i> denotes the Euclidean norm of the keyword weights of the report. <i>|d<sub>i</sub>|</i> is the length of the report, <i>avgdl</i> is the average document length.</p>
+
+        <p>In addition, new state-of-the-art weighting methods in IR which benefits from word embeddings is used which is as shown below:</p>
+
+        <span class="center"><img src="4.png" alt="something wrong"/></span>
+
+        <p><i>tc<sub>d<sub>i</sub></sub>(t)</i> in all the above 4 equations is replaced by this state-of-the-art weighting and all four new weights are calculated with this state-of-the-art weighting.</p>
+
+        <hr><br/>
+
+        <p>These term weight vectors are very high dimensional, so to bring down the dimensionality PCA is used.</p>
+
+        <p>This new feature vector is given to <strong><i>Suport Vector Reression</i></strong> for predicting the volatility. This formulates to the optimization problem as follows:</p>
+
+        <span class="center"><img src="5.png" alt="something wrong"/></span>
+
+        <p>To solve above problem, the function <i>f</i> can be re-parametrized in terms of a kernel function <i>K</i> with weights <i>&#x3B1;<sub>i</sub></i></p>
+
+        <span class="center"><img src="6.png" alt="something wrong"/></span>
+
+        <hr><br/>
+
+        <p>In addition to the textual features, three other <strong><i>Market Features</i></strong> were used. Fist is the historical prices. Second is the current volatility. Third is the sector.</p>
+
+        <p>Current volatility is calculated on the window of one quartile before the issue date of the report.</p>
+
+
+        <hr><br/>
+
+        <p><strong><i>Feature Fusuion</i></strong> discusses the methods used to combine the Text Features and Market Features.</p>
+
+        <p>First method is termed as <strong><i>Early Fusion</i></strong> where both the features are simply joined in one feature space.</p>
+
+        <p>There is <strong><i>Late Fusion</i></strong> as well where the two models for both the features are learned seperately and then another meta model is learned to combine the reults of both. Second method used is <strong><i>Stacking</i></strong> which is a special case of late fusion. In stacking, train set is split into two(70%-30%). First portion is used to train seperate models, then the second portion is used to get labels from both models sepeartely and learn another model to combine the base models.</p>
+
+        <p>Another third method for fusion is <strong><i>MKL Algorithm</i></strong> which is also called as <strong><i>Intermidiate Fusion</i></strong>, it has something to do with adding more constrains to the SVM kernel learning.</p>
+
+        <hr><br/>
+
+        <h2>Reference</h2>
+        <a href="https://arxiv.org/pdf/1702.01978.pdf">Volatility Prediction using Financial Disclosures Sentiments with Word Embedding-based IR Models</a>
+             
+      
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
