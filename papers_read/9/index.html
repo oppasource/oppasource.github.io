@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Financial Keyword Expansion via Continuous Word Vector Representations</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Financial Keyword Expansion via Continuous Word Vector Representations</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>There is a predefined set of words which defines sentiments in financial domain. This set of keyword is expanded using the similarity between word vector. Further this expanded size of keyword is used for risk(volatility) prediction task which proves that the new set of expanded keyword is better.</p>
+
+
+        <h2>"How" part of the paper</h2>
+        <p>There is general purpose sentiment lexicons which can be used for sentiment analysis. Rather than using this general set of words <strong><i>Financial Sentiment Lexicons</i></strong> are used to better adapt to the domain. It consists 6 word list provided by Loughran and McDonald, 2011(reference given in original paper). The six lists are negative (Fin-Neg), positive (Fin-Pos), uncertainty (Fin-Unc), litigious (Fin-Lit), strong modal words (MW-Strong), and weak modal words (MW-Weak).</p>
+
+        <p>There are in all 3,911 keywords falling in these categories which is used as seed to expand the list of keywords.</p>
+
+        <hr><br/>
+
+        <p>Annual reports are used to learn the word embeddings of the words. <strong>Simple Keyword Expansion</strong> is used in which, these learnt word vectors are used. The list of financial sentiment keywords are taken and cosine similarity is calculated. <i> Top-n</i> similar words for each word is choosen to expand the list of keywords.</p>
+
+        <hr><br/>
+
+        <p><strong><i>Keyword Expansion with Syntactic Information</i></strong> is another method for keyword expansion where POS tagging is first done on the text corpora(annual reports). Word embedding is learnt after that. Then the words in the sentiment lexicon with 4 major POS tags(i.e. JJ, NN, VB, RB) are used as seeds to expand. The rest is similar as above method. Intuition is that word with different POS tag may result in different <i>top-n</i> similar words.</p>
+
+        <p>Table shows top-5 similar words of "default" with different POS tags.</p>
+
+        <span class="center"><img src="1.png" alt="something wrong"/></span>
+
+        <hr><br/>
+
+        <p>These new set of keyword was used to predict the volatility (Regression) where <strong><i>Support Vector Regression</i></strong> was used. Also another similar ranking task was done to rank companies based on how risky they are. This is just by splitting volatility into 5 risk levels. <strong><i>Ranking SVM</i></strong> was used for this task.</p>
+
+        <p>To create the input feature, term weighting scores were used. Three features were calculated for each term in set of expanded keywords, TF, TF-IDF and LOG1P.</p>
+
+        <p>TF is normalized term frequency with the document length. TF-IDF is also the same TF score times IDF score. And <i>LOG1P(t, d) = log(1 + TermCount(t, d))</i></p>
+
+        
+        <hr><br/>
+
+        <h2>Reference</h2>
+        <a href="http://www.aclweb.org/anthology/D14-1152">Financial Keyword Expansion via Continuous Word Vector Representations</a>
+             
+      
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
