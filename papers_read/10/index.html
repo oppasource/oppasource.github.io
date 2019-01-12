@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Deep Learning for Event-Driven Stock Prediction</title>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    
+    crossorigin="anonymous">
+</script>
+<script> 
+$(function(){
+  $("#header1").load("/header1.html"); 
+  $("#footer1").load("/footer1.html"); 
+});
+</script> 
+
+  <meta name="description" content="research papers read" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header1"></div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="content">
+        <!-- insert the page content here -->
+        <h1><strong>Deep Learning for Event-Driven Stock Prediction</strong></h1>
+        <h2>"What" part of the paper</h2> 
+        <p>Predicting stock movement from the events occuring in the news. Task is considered to be classification and not regression, such that the model will say if the stock price is going to go up or down looking at the news events.</p>
+
+
+        <h2>"How" part of the paper</h2>
+        <p><i><strong>Event extraction</strong></i> from news using <i><strong>Open IE</strong></i> as a tuple as <i>E = (O<sub>1</sub>, P, O<sub>2</sub>, T)</i> where <i>P</i> is the action, <i>O<sub>1</sub></i> is the actor, O<sub>2</sub> is the object and <i>T</i> is the time-stamp of the event. Time stamp is used to align the events with the historical stock price. Eample for a line in the news, <i>"Jan 13, 2014 - Google Acquires Smart Thermostat Maker Nest For for $3.2 billion."</i> Open IE will exact event as <i>(Actor = Google, Action = acquires, Object = Nest, Time = Jan 13, 2014)</i></p> 
+
+        <p>For the lines in news, if such extraction is not possible, those lines are filtered out.</p>
+
+        <hr><br/>
+
+        <p>Once the events are extracted <strong>Event embeddings</strong> are learnt. This is done by a <i><strong>Neural Tensor Network.</strong></i> Each of the attributes in the event (actor, action, object) and converted to word embeddings, if any of the attributes have more than one word, average of all the word embeddings is taken for that particular attirbute.</p>
+
+        <p>The central idea of learning these embeddings is that there can be many similar events having different arguments in the event. So even if the actor, action, objects are slightly different, the event can still be similar to other event having different attributes.</p>
+
+        <span class="center"><img src="1.png" alt="something wrong"/></span>
+
+        <p>The intermediate vectors such as <i>R<sub>1</sub></i> in the figure is computed as:</p>
+
+        <span class="center"><img src="2.png" alt="something wrong"/></span>
+
+        <p>Where in first product term in above equation is bilinear tensor product. Second product term is normal feed forward neural network. SImilar way all the other intermediate vectors are computed and also the final event embedding.</p>
+
+        <p>For <strong><i>Training</i></strong> these embeddings, as assumption is made that the event tuple in the training set should be given higher score than the corrupted event tuple. Corrupted event tuple implies a tuple where one of the argument is replaced with random argument. Example corrupted event tuple is denoted by <i>E<sup>r</sup>=(O<sub>1</sub><sup>r</sup>,P,O<sub>2</sub>)</i> for the correct event tuple <i>E=(O<sub>1</sub>,P,O<sub>2</sub>)</i> where <i>O<sub>1</sub></i> is replaced by a random word in training dictionary to get <i>O<sub>1</sub><sup>r</sup>.</i></p>
+
+        <p>The loss to be minimized is given as:</p>
+
+        <span class="center"><img src="3.png" alt="something wrong" width = "100%" height = "100%"/></span>
+
+        <p>Here <i>&#x3A6; = (T<sub>1</sub>, T<sub>2</sub>, T<sub>3</sub>, W, b)</i>, are the parameters of the model. If the loss is equal to zero, algorithm moves to the next tuple. If it it non-zero, it updates the weights using Backpropagation to minimize the loss.</p>
+
+        <hr><br/>
+
+        <p>After getting the event embeddings, <strong><i>The deep learning prediction model</i></strong> is shown below.</p>
+
+        <span class="center"><img src="4.png" alt="something wrong" width = "100%" height = "100%"/></span>
+
+        <p>Long-term events are modeled for events over last month, mid-term events are modeled as events over last week and short-term events are modeled as events over last day.</p>
+
+        <p>The event embeddings are passed through CNN layer and after that it is passed through max pooling layer. For short-term event embedding, average is taken over all the news in a day. This results in a feature vector of <i>V<sup>c</sup> = (V<sup>l</sup>, V<sup>m</sup>, V<sup>s</sup>)</i> which incorporates long-term, mid-term and short-term dependencies. This feature vector is concatenated and passed through a feed forward neural network having 2 hidden layer. This feed forward neural network has 2 neurons in the output layer which classifies market will move up or down.</p>
+
+        <hr><br/>
+
+
+        <h2>Reference</h2>
+        <a href="https://www.ijcai.org/Proceedings/15/Papers/329.pdf">Deep Learning for Event-Driven Stock Prediction</a>
+             
+      
+        <br/><br/>
+      </div>
+    </div>
+
+    <div id="footer1"></div>
+    
+  </div>
+</body>
+</html>
